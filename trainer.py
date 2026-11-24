@@ -41,7 +41,7 @@ class Trainer:
     def step(self):
         acts = self.buffer.next()
         losses = self.crosscoder.get_losses(acts)
-        loss = losses.l2_loss + self.get_l1_coeff() * losses.l1_loss_shared + cfg['eta']*self.get_l1_coeff() * losses.l1_loss_exclusive
+        loss = losses.l2_loss + self.get_l1_coeff() * losses.l1_loss_shared + self.cfg['eta']*self.get_l1_coeff() * losses.l1_loss_exclusive
         loss.backward()
         clip_grad_norm_(self.crosscoder.parameters(), max_norm=1.0)
         self.optimizer.step()
